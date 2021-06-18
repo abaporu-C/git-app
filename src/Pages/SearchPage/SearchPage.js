@@ -29,7 +29,7 @@ export const SearchPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {result.map(result => <Query key={result.id} url={result.url} author={result.owner.login} repos={result.name}/>)}
+                    {result.map(result => <Query key={result.id} url={result.html_url} author={result.owner.login} repos={result.name}/>)}
                 </tbody>
             </table>            
         </div>
