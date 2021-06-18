@@ -4,22 +4,31 @@ import {Query} from '../../Components/Query/query';
 
 export const SearchPage = () => {
 
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState({
+        query: '',
+        searchType: ''
+    });
     const [result, setResult] = useState([])
 
     const handleFormChange = (input) => {
-        setQuery(input);
+        setQuery((prevalue) => {
+            return{
+                ...prevalue,
+                [input[1]] : input[0]
+            }
+        });
     }
 
     const handleFormSubmit = () => {
-        fetch(`https://api.github.com/users/${query}/repos`)
+        fetch(`https://api.github.com/search/${query.searchType}?q=${query.query}`)
         .then(res => res.json())
-        .then(data => setResult(data))
+        .then(data => {setResult(data.items)
+        console.log(result)})
     }
 
     return(
         <div>
-            <Form userInput={query} onFormChange={handleFormChange} onFormSubmit={handleFormSubmit}/>
+            <Form userInput={query} onFormChange={handleFormChange} onFormSubmit={handleFormSubmit} />
             <table>
                 <thead>
                     <tr>
@@ -29,7 +38,7 @@ export const SearchPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {result.map(result => <Query key={result.id} url={result.html_url} author={result.owner.login} repos={result.name}/>)}
+                    {result.map(result => <Query key={result.id} url={result.html_url} author={result.login} repos={result.name}/>)}
                 </tbody>
             </table>            
         </div>

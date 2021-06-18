@@ -3,7 +3,9 @@ import React from 'react';
 export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
 
     const handleChange = (event) => {
-        onFormChange(event.target.value);
+        let value = event.target.value;
+        let name = event.target.name;
+        onFormChange([value, name]);        
     }
 
     const handleSubmit = (event) => {
@@ -14,7 +16,18 @@ export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="text" value={userInput} onChange={handleChange}/>
+                <input type="text" name={"query"} value={userInput.query} onChange={handleChange}/>
+                <label>
+                    Search For:
+                    <select value={userInput.searchType} onChange={handleChange} name={"searchType"}>
+                        <option value={"code"}>Code</option>
+                        <option value={"commits"}>Commits</option>
+                        <option value={"issues"}>Issues</option>
+                        <option value={"labels"}>Labels</option>
+                        <option value={"repositories"}>Repositories</option>
+                        <option value={"users"}>Users</option>
+                    </select>
+                </label>
                 <input type="submit" />
             </form>
         </div>
