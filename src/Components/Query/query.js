@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Query = ({url, repos, author}) => {
+export const Query = ({author, repos, url}) => {
     return(
         <tr>
             <td>{author}</td>

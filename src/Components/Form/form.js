@@ -5,7 +5,7 @@ export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
     const handleChange = (event) => {
         let value = event.target.value;
         let name = event.target.name;
-        onFormChange([value, name]);        
+        onFormChange({name: name, value: value});        
     }
 
     const handleSubmit = (event) => {
@@ -21,7 +21,6 @@ export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
                     Search For:
                     <select value={userInput.searchType} onChange={handleChange} name={"searchType"}>
                         <option value={"code"}>Code</option>
-                        <option value={"commits"}>Commits</option>
                         <option value={"issues"}>Issues</option>
                         <option value={"labels"}>Labels</option>
                         <option value={"repositories"}>Repositories</option>
