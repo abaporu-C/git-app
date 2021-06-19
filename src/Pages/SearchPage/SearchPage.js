@@ -9,7 +9,11 @@ export const SearchPage = () => {
         query: '',
         searchType: 'code'
     });
-    const [result, setResult] = useState([])
+    
+    const [result, setResult] = useState({
+        tableState: query.searchType,
+        items: []
+    })
 
     const handleFormChange = (input) => {
         setQuery((prevalue) => {
@@ -23,9 +27,14 @@ export const SearchPage = () => {
     const handleFormSubmit = () => {
         fetch(`https://api.github.com/search/${query.searchType}?q=${encodeURIComponent(query.query)}`)
         .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            setResult(data.items)
+        .then(data => {  
+            setResult((prevState) => {
+                return {
+                    ...prevState,
+                    tableState: query.searchType,
+                    items: data.items 
+                }
+            })       
         })
     }
 
@@ -35,18 +44,18 @@ export const SearchPage = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>{query.searchType? tableHeaders[query.searchType]["author"] : "Author"}</th>
-                        <th>{query.searchType? tableHeaders[query.searchType]["repo"] : "Repository"}</th>
-                        <th>{query.searchType? tableHeaders[query.searchType]["url"] : "Url"}</th>
+                        <th>{tableHeaders[result.tableState]["author"]}</th>
+                        <th>{tableHeaders[result.tableState]["repo"]}</th>
+                        <th>{tableHeaders[result.tableState]["url"]}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {result.map(result => {
-                        if(query.searchType === "code") return <Query key={result.sha} author={result.repository.owner.login} repos={result.repository.name} url={result.html_url}/>                        
-                        else if (query.searchType === "issues") return <Query key={result.id} author={result.user.login} repos={result.title} url={result.html_url} />
-                        else if (query.searchType === "labels") return <Query key={result.id} author={result.name} repos={result.description} url={result.url}/>
-                        else if (query.searchType === "repositories") return <Query key={result.id} author={result.owner.login} repos={result.name} url={result.html_url} />
-                        else return <Query key={result.id} author={result.login} repos={result.name} url={result.html_url} />
+                    {result.items.map(item => {
+                        console.log(item)
+                        if(result.tableState === "code") return <Query key={item.sha} author={item.repository.owner.login} repos={item.repository.name} url={item.html_url}/>                        
+                        else if (result.tableState === "issues") return <Query key={item.id} author={item.user.login} repos={item.title} url={item.html_url} />
+                        else if (result.tableState === "repositories") return <Query key={item.id} author={item.owner.login} repos={item.name} url={item.html_url} />
+                        else return <Query key={item.id} author={item.login} repos={item.type} url={item.html_url} />
                     })}
                 </tbody>
             </table>            

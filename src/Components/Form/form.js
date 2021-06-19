@@ -22,7 +22,6 @@ export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
                     <select value={userInput.searchType} onChange={handleChange} name={"searchType"}>
                         <option value={"code"}>Code</option>
                         <option value={"issues"}>Issues</option>
-                        <option value={"labels"}>Labels</option>
                         <option value={"repositories"}>Repositories</option>
                         <option value={"users"}>Users</option>
                     </select>

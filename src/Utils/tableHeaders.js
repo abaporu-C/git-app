@@ -9,11 +9,6 @@ module.exports = {
         "repo": "Issue",
         "url": "Url"
     },
-    "labels": {
-        "author": "Author",
-        "repo": "Description",
-        "url": "Url"
-    },
     "repositories":{
         "author": "Author",
         "repo": "Repository",
@@ -21,7 +16,7 @@ module.exports = {
     } ,
     "users": {
         "author": "User",
-        "repo": "Repositories",
+        "repo": "Type",
         "url": "Url"
     }
 }
