@@ -4,7 +4,7 @@ const tableHeaders = require('../../Utils/tableHeaders.js');
 
 export const Table = ({tableState, items, error}) => {
     return(
-        <div>
+        <div className="table-wrapper">
             {error?
             <p>{error}</p>
             :

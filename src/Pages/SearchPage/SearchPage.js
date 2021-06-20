@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Form} from '../../Components/Form/form';
 import {Table} from '../../Components/Table/table';
+import {Header} from '../../Components/Header/header';
 
 export const SearchPage = () => {
 
@@ -26,7 +27,9 @@ export const SearchPage = () => {
 
     const handleFormSubmit = () => {
         fetch(`https://api.github.com/search/${query.searchType}?q=${encodeURIComponent(query.query)}`)
-        .then(res => res.json())
+        .then(res => {
+            return res.json()
+        })
         .then(data => {
             if(data.errors){
                 return setResult(prevState => {
@@ -49,6 +52,7 @@ export const SearchPage = () => {
 
     return(
         <div>
+            <Header />
             <Form userInput={query} onFormChange={handleFormChange} onFormSubmit={handleFormSubmit} />
             <Table tableState={result.tableState} items={result.items} error={result.error} />         
         </div>

@@ -16,17 +16,17 @@ export const Form = ({ onFormSubmit, onFormChange, userInput }) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="text" name={"query"} value={userInput.query} onChange={handleChange}/>
                 <label>
-                    Search For:
+                    Search For
                     <select value={userInput.searchType} onChange={handleChange} name={"searchType"}>
                         <option value={"code"}>Code</option>
                         <option value={"issues"}>Issues</option>
-                        <option value={"repositories"}>Repositories</option>
+                        <option value={"repositories"}>Repos</option>
                         <option value={"users"}>Users</option>
                     </select>
                 </label>
-                <input type="submit" />
+                <input type="text" name={"query"} value={userInput.query} onChange={handleChange} size="30"/>                
+                <input type="submit" value="Search"/>
             </form>
         </div>
     )
