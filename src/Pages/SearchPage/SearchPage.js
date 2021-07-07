@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Form} from '../../Components/Form/form';
-import {Table} from '../../Components/Table/table';
+import {Grid} from '../../Components/Grid/Grid.js';
 import {Header} from '../../Components/Header/header';
 
 export const SearchPage = () => {
@@ -11,7 +11,7 @@ export const SearchPage = () => {
     });
     
     const [result, setResult] = useState({
-        tableState: query.searchType,
+        gridState: query.searchType,
         items: [],
         error: ''
     })
@@ -42,7 +42,7 @@ export const SearchPage = () => {
             setResult((prevState) => {
                 return {
                     ...prevState,
-                    tableState: query.searchType,
+                    gridState: query.searchType,
                     items: data.items,
                     error: ''
                 }
@@ -54,7 +54,7 @@ export const SearchPage = () => {
         <div>
             <Header />
             <Form userInput={query} onFormChange={handleFormChange} onFormSubmit={handleFormSubmit} />
-            <Table tableState={result.tableState} items={result.items} error={result.error} />         
+            <Grid gridState={result.gridState} items={result.items} error={result.error} />         
         </div>
     )
 }

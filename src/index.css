@@ -26,130 +26,49 @@ select, input[type="submit"] {
   margin: 10px;
 }
 
-table {
-  border-collapse: collapse;
-  margin: 15px auto 0 auto;
-  max-width: 95%;
+/*************
+	Classes
+*************/
+
+.content{
+	text-align:left;
 }
 
-td, th {
-  padding: 6px; 
-  border: 1px solid #ccc; 
-  text-align: left;
+.grid-element{
+	border: groove 4px #000;
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	padding: 20px;
 }
 
-tr:nth-of-type(odd) { 
-  background: #eee; 
+.grid-element:hover{
+	background-color:#000;
+	border: groove 4px #FFF;
+	color:#FFF;
 }
 
-th { 
-  background: #333; 
-  color: white; 
-  font-weight: bold; 
+.grid-element img{
+	margin-bottom: 5px;
 }
 
-/***********
-   Classes
-**********/
-.table-wrapper{
-  overflow:auto;
+.grid-element p, .grid-element a{
+	margin: 0;
+	padding-left: 10px;
 }
 
-/************
-Media Queries
-************/
+/*******************
+ 	Media Queries
+*******************/
 
-/* 
-Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
-and also iPads specifically.
-*/
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+@media screen and (min-width: 425px){
+	.grid-wrapper{
+		display: grid;		
+		grid-template-columns: 1fr 1fr;
+		max-width: 100%;
+	}
 
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
+	.grid-element{
+		max-width: 40%;
 	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	/*
-	Label the data
-	*//* 
-Max width before this PARTICULAR table gets nasty
-This query will take effect for any screen smaller than 760px
-and also iPads specifically.
-*/
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	/*
-	Label the data
-	*/
-	td:nth-of-type(1):before { content: "Name"; }
-	td:nth-of-type(2):before { content: "Repo/Descrip"; }
-	td:nth-of-type(3):before { content: "Url"; }
-}
 }
