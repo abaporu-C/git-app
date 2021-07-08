@@ -4,7 +4,7 @@ export const Header = () => {
     return(
         <div>
             <header>
-                <h1>GitHub quick search engine!</h1>
+                <h1 className="neon-text">GITHUB <br /> SEARCH</h1>
             </header>
         </div>
     )
