@@ -9,10 +9,11 @@ db = SQLAlchemy(app);
 class Query(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
-    searchValue = db.Column(db.Integer, default=0)
+    search_type = db.Column(db.String(12), nullable=False)
+    search_count = db.Column(db.Integer, default=1)
 
     def add_search_count(self):
-        self.searchValue = self.searchValue + 1
+        self.search_count = self.search_count + 1
 
     def __str__(self):
         return f'{self.id} {self.content}'
@@ -21,21 +22,25 @@ def query_serializer(query):
     return{
         "id": query.id,
         "content": query.content,
-        "searchValue": query.searchValue
+        "serach_type": query.search_type,
+        "search_count": query.search_count
     }
 
-@app.route('/api', methods='GET')
+@app.route('/api', methods=['GET'])
 def index():
     return jsonify([*map(query_serializer, Query.query.all())])
 
 @app.route('/api/add', methods=['POST'])
 def add():
-    request_data=json.loads(request.data)
-    query_instance = Query.query.filter_by(content=request_data["content"]) if Query.query.filter_by(content=request_data["content"]) else Query(content=request_data["content"], searchValue=1)
-
-    db.session.add(query_instance) if Query.query.filter_by(content=request_data["content"]) else query_instance.add_search_count()
-
-
-    db.session.commit()
-
+    request_data=json.loads(request.data)    
+    query_instance = Query.query.filter_by(content=request_data["content"], search_type=request_data["search_type"]).first() or Query(content=request_data["content"], search_type=request_data["search_type"])
+    
+    if(Query.query.filter_by(content=request_data["content"], search_type=request_data["search_type"])):
+        db.session.add(query_instance)
+        query_instance.search_count = query_instance.search_count + 1
+        db.session.commit()
+    else:
+        db.session.add(query_instance) 
+        db.session.commit()
+    
     return {'201': 'db updated sucessfully'}

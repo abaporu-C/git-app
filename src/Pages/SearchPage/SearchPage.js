@@ -30,6 +30,12 @@ export const SearchPage = () => {
         else if(screenWidth >= 1024 && screenWidth < 1336) setCardsPerPage(6);
         else if(parseInt(window.screen.width) >= 1336) setCardsPerPage(8);
 
+        fetch('/api')
+        .then(res => res.json())
+        .then(data => {
+            data.sort((a,b) => b.search_count - a.search_count)
+            console.log(data)            
+        })
     }, [])
 
     //Event Handlers
@@ -69,6 +75,20 @@ export const SearchPage = () => {
                 }
             })       
         })
+
+        fetch('/api/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "content": query.query,
+                "search_type": query.searchType
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error('Error', err))
     }
 
     const Paginate = (page) => {
